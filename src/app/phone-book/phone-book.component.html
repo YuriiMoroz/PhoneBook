@@ -1,0 +1,55 @@
+<h1>Phone Book</h1>
+    <hr>
+    
+
+<div class="list">
+    <input type="text" [(ngModel)]="search" class="fild" placeholder="search text goes here">
+
+    <input type="button" (click)="AddContact()" value="add phone" class="addBtn">
+    <table class="tbl">
+        <thead>
+        <tr class="head">
+            <th (click)="sort('name',$event)">
+                First name 
+                <span *ngIf="item=='name'&&type">▼</span>
+                <span *ngIf="item=='name'&&!type">▲</span>
+            </th>
+            <th (click)="sort('surname',$event)">
+                Last name
+                <span *ngIf="item=='surname'&&type">▼</span>
+                <span *ngIf="item=='surname'&&!type">▲</span>
+            </th>
+            <th (click)="sort('number',$event)">
+                Number
+                <span *ngIf="item=='number'&&type">▼</span>
+                <span *ngIf="item=='number'&&!type">▲</span>
+            </th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of ContactArr | search:search | sort:type:item ; index as i">
+            <td>{{item.name | titlecase}}</td>
+            <td>{{item.surname | titlecase}}</td>
+            <td>{{item.number}}</td>
+            <td><button class="editBtn"(click)="EditFunction(i)">Edit</button></td>
+            <td><button class="deleteBtn"(click)="DeleteFunction(i)">Delete</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="add" class="modal">
+    <div class="data">
+        <form action="">
+            <h2>Add phone</h2>
+            <hr>
+            <input type="text" class="contData" [(ngModel)]="first" name="first" placeholder="first name goes here">
+            <input type="text" class="contData" [(ngModel)]="second" name="second" placeholder="second name goes here">
+            <input type="tel" class="contData" [(ngModel)]="num" name="num" placeholder="number goes here">
+            <hr>
+            <input type="button" value="Save" (click)="SaveChange(first,second,num)" class="saveBtn">
+        </form>
+    </div>
+</div>
